@@ -46,9 +46,9 @@ asset:
 logging:
   # Defines the properties of online logging.
   rt_plt: False
-  record_dofs: False
+  record_dofs: True
   record_observations: False
-  record_length: 10
+  record_length: 300
   buf_len_s: 0.6
   num_rows: 2
   num_cols: 3 #  multiplication of rows and cols should be equal to the 
@@ -86,7 +86,7 @@ rewards:
     reorienttask_obj_rot: 0.01
 
   success_tolerance: 0.1
-  fall_dist_threshold: 0.5
+  fall_dist_threshold: 0.3
 
 actions:
   clip: True

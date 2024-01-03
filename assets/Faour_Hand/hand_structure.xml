@@ -1,0 +1,129 @@
+<!-- 
+faive_structure.xml
+kinematic and dynamic structure data for Faive Hand MJCF model
+
+Copyright 2023 Soft Robotics Lab, ETH Zurich
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<mujoco model="right_faive">
+    <body name="root">
+        <geom mesh="rack"/>
+        <body name="palm" pos="0.069 0.0035 -0.0115">
+            <!-- So that the contact convex hull can be calculated for each distinct component rather than for the entire palm structure, separate it into separate geoms -->
+            <geom name="palm" mesh="palm_main"/>
+            <!--thumb-->
+            <body name="cage" euler="1.57079632679  -0.174533 0" pos="-0.038581 -0.052 0.0023">
+                <inertial pos="0 0 0" mass="0.028" diaginertia="4E-10 4E-10 3E-10" />
+                <!--<geom mesh="thumb_motor"/>-->
+                <joint name="palm2cage" axis="0 1 0" range="-1 0"/>        
+                <body name="thumb_base" pos="0 -0.012 0.021" euler="1.57079632679 3.14159265359 -1.57079632679 ">
+                    <joint name="cage2base" axis="1 0 0" range="-0.174533 1.5708"/>
+                    <geom mesh="thumb_base"/>
+                    <body name="thumb_basevirt" pos="-0.0125 0 0.014" euler="0 0 -1.57079632679 ">
+                        <joint name="thumb_base2basevirt" axis="-1 0 0" range="0 0.78539816339"/>
+                        <inertial pos="0 0 0" mass="0.001" diaginertia="4E-10 4E-10 3E-10" />
+                        <body name="thumb_pf" pos="0 0 0.015" euler="-1.57079632679  0 0">
+                            <joint name="thumb_basevirt2pf" axis="-1 0 0" range="0 0.78539816339"/>
+                            <geom mesh="thumb_pf"/>
+                            <body name="thumb_pfvirt" pos="0 -0.035 0" euler="1.57079632679  0 0">
+                                <joint name="thumb_pf2pfvirt" axis="-1 0 0"  range="0 0.78539816339"/>
+                                <inertial pos="0 0 0" mass="0.001" diaginertia="4E-10 4E-10 3E-10" />
+                                <body name="thumb_mf" pos="0 0 0.015" euler="1.57079632679  3.14159265359 0">
+                                    <joint name="thumb_pfvirt2mf" axis="1 0 0" range="0 0.78539816339"/>
+                                    <geom mesh="thumb_mf"/>
+                                    <body name="thumb_df" pos="0 0.0275 0" euler="0 0 0">
+                                        <joint name="thumb_mf2df" axis="1 0 0" range="0 1.57079632679 "/>
+                                        <geom name="thumb_df" mesh="thumb_df"/>
+                                    </body>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+            <!--ring-->
+            <body name="ring_fingsup" euler="-1.57079632679 1.424188669627 0" pos="-0.00155 -0.010083 -0.005"> <!--"-0.00155 -0.010083 -0.005" == "-0.002602 -0.002927 0.0025"-->
+                <geom mesh="palm_ring_fingsup"/>          
+                <body name="ring_basevirt" pos="0 0 0.021" euler="3.14159265359 3.14159265359 0">
+                    <joint name="ring_base2basevirt" axis="-1 0 0" range="0 0.78539816339"/>
+                    <inertial pos="0 0 0" mass="0.001" diaginertia="4E-10 4E-10 3E-10" />
+                    <body name="ring_pf" pos="0 0 0.015" euler="-1.57079632679 0 0">
+                        <joint name="ring_basevirt2pf" axis="-1 0 0" range="0 0.78539816339"/>
+                        <geom mesh="ring_pf"/>
+                        <body name="ring_pfvirt" pos="0 -0.035 0" euler="1.57079632679 0 0">
+                            <joint name="ring_pf2pfvirt" axis="-1 0 0"  range="0 0.78539816339"/>
+                            <inertial pos="0 0 0" mass="0.001" diaginertia="4E-10 4E-10 3E-10" />
+                            <body name="ring_mf" pos="0 0 0.015" euler="1.57079632679 3.14159265359 0">
+                                <joint name="ring_pfvirt2mf" axis="1 0 0" range="0 0.78539816339"/>
+                                <geom mesh="ring_mf"/>
+                                <body name="ring_df" pos="0 0.0275 0" euler="0 0 0">
+                                    <joint name="ring_mf2df" axis="1 0 0" range="0 1.57079632679"/>
+                                    <geom mesh="ring_df"/>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+            <!--middle-->
+            <body name="middle_fingsup" euler="-1.57079632679 1.57079632679 0" pos="0.000451 -0.035 -0.005">
+                <geom mesh="palm_middle_fingsup"/>          
+                <body name="middle_basevirt" pos="0 0 0.021" euler="3.14159265359 3.14159265359 0">
+                    <joint name="middle_base2basevirt" axis="-1 0 0" range="0 0.78539816339"/>
+                    <inertial pos="0 0 0" mass="0.001" diaginertia="4E-10 4E-10 3E-10" />
+                    <body name="middle_pf" pos="0 0 0.015" euler="-1.57079632679 0 0">
+                        <joint name="middle_basevirt2pf" axis="-1 0 0" range="0 0.78539816339"/>
+                        <geom mesh="middle_pf"/>
+                        <body name="middle_pfvirt" pos="0 -0.035 0" euler="1.57079632679 0 0">
+                            <joint name="middle_pf2pfvirt" axis="-1 0 0"  range="0 0.78539816339"/>
+                            <inertial pos="0 0 0" mass="0.001" diaginertia="4E-10 4E-10 3E-10" />
+                            <body name="middle_mf" pos="0 0 0.015" euler="1.57079632679 3.14159265359 0">
+                                <joint name="middle_pfvirt2mf" axis="1 0 0" range="0 0.78539816339"/>
+                                <geom mesh="middle_mf"/>
+                                <body name="middle_df" pos="0 0.0275 0" euler="0 0 0">
+                                    <joint name="middle_mf2df" axis="1 0 0" range="0 1.57079632679"/>
+                                    <geom mesh="middle_df"/>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+            <!--Index-->
+            <body name="index_fingsup" euler="-1.57079632679 1.717403983962 0" pos="-0.00155 -0.06 -0.005">
+                <geom mesh="palm_index_fingsup"/>          
+                <body name="index_basevirt" pos="0 0 0.021" euler="3.14159265359 3.14159265359 0">
+                    <joint name="index_base2basevirt" axis="-1 0 0" range="0 0.78539816339"/>
+                    <inertial pos="0 0 0" mass="0.001" diaginertia="4E-10 4E-10 3E-10" />
+                    <body name="index_pf" pos="0 0 0.015" euler="-1.57079632679 0 0">
+                        <joint name="index_basevirt2pf" axis="-1 0 0" range="0 0.78539816339"/>
+                        <geom mesh="index_pf"/>
+                        <body name="index_pfvirt" pos="0 -0.035 0" euler="1.57079632679 0 0">
+                            <joint name="index_pf2pfvirt" axis="-1 0 0"  range="0 0.78539816339"/>
+                            <inertial pos="0 0 0" mass="0.001" diaginertia="4E-10 4E-10 3E-10" />
+                            <body name="index_mf" pos="0 0 0.015" euler="1.57079632679 3.14159265359 0">
+                                <joint name="index_pfvirt2mf" axis="1 0 0" range="0 0.78539816339"/>
+                                <geom mesh="index_mf"/>
+                                <body name="index_df" pos="0 0.0275 0" euler="0 0 0">
+                                    <joint name="index_mf2df" axis="1 0 0" range="0 1.57079632679"/>
+                                    <geom mesh="index_df"/>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </body> 
+</mujoco>

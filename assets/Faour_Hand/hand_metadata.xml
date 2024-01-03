@@ -1,0 +1,214 @@
+<!-- 
+faive_metadata.xml
+metadata for Faive Hand MJCF model
+
+Copyright 2023 Soft Robotics Lab, ETH Zurich
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<mujoco>
+    <compiler angle="radian"/>
+    <option collision="all"/>
+    <default>
+        <!-- use same geom params as the Shadow Hand model in IsaacGymEnv for now -->
+        <!-- the density is adjusted so that the total weight of the hand part (not including the base) is the same as the real hand (106g) (therefore the base will have a wrong mass, which shouldn't matter for now) -->
+        <geom rgba="1 1 1 1" type="mesh" density="1" friction="1 0.005 0.001" condim="3" margin="0.0005" contype="1" conaffinity="1"/>
+        <!-- use same joint params as IsaacGymEnv for now -->
+        <!-- TODO: joint damping and position control kp should eventually be set to sysID'ed values -->
+        <joint type="hinge" limited="true" damping="0.05" armature="0.001" margin="0.01" frictionloss="0.001"/>
+        <!-- actuator configuration -->
+        <position ctrllimited="true" forcelimited="true" forcerange="-1 1" kp="2."/>
+        <!-- the tendon which limits the two joints creating the rolling joint should be very limited in its length range -->
+        <tendon limited="true" range="-0.001 0.001"/>
+    </default>
+    <asset>
+        <!-- IsaacGym somehow does not respect the default mesh scale so set each of them manually here... -->
+        
+        <!--mesh name="base" file="mesh/base.stl" scale="1 1 1"/-->
+        <mesh name="palm_main" file="mesh/Palm_main_bis.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="palm_thumb" file="mesh/Palm_Thumb.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="palm_index_fingsup" file="mesh/PALM_WO.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="palm_middle_fingsup" file="mesh/PALM_WO.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="palm_ring_fingsup" file="mesh/PALM_WO.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="rack" file="mesh/Rack.stl" scale="0.001 0.001 0.001"/>
+
+        <mesh name="thumb_base" file="mesh/base_thumb.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="thumb_motor" file="mesh/MOTOR_CAGE_HEADLESS.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="thumb_pf" file="mesh/PF_bone.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="thumb_mf" file="mesh/MF_bone.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="thumb_df" file="mesh/DF_bone.stl" scale="0.001 0.001 0.001"/>
+        
+        <mesh name="index_pf" file="mesh/PF_bone.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="index_mf" file="mesh/MF_bone.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="index_df" file="mesh/DF_bone.stl" scale="0.001 0.001 0.001"/>
+        
+        <mesh name="middle_pf" file="mesh/PF_bone.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="middle_mf" file="mesh/MF_bone.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="middle_df" file="mesh/DF_bone.stl" scale="0.001 0.001 0.001"/>
+        
+        <mesh name="ring_pf" file="mesh/PF_bone.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="ring_mf" file="mesh/MF_bone.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="ring_df" file="mesh/DF_bone.stl" scale="0.001 0.001 0.001"/>
+
+    </asset>
+    <contact>
+        <!-- neighboring bodies are excluded from contact calculation -->
+        <!--
+        <exclude body1="palm" body2="cage"/>
+        <exclude body1="root" body2="palm"/>
+        <exclude body1="cage" body2="thumb_base"/>
+        <exclude body1="thumb_base" body2="thumb_pf"/>
+        <exclude body1="thumb_pf" body2="thumb_mf"/>
+        <exclude body1="thumb_mf" body2="thumb_df"/>
+
+        <exclude body1="palm" body2="ring_fingsup"/>
+        <exclude body1="ring_fingsup" body2="ring_pf"/>
+        <exclude body1="ring_pf" body2="ring_mf"/>
+        <exclude body1="ring_mf" body2="ring_df"/>
+
+        <exclude body1="palm" body2="middle_fingsup"/>
+        <exclude body1="middle_fingsup" body2="middle_pf"/>
+        <exclude body1="middle_pf" body2="middle_mf"/>
+        <exclude body1="middle_mf" body2="middle_df"/>
+
+        <exclude body1="palm" body2="index_fingsup"/>
+        <exclude body1="index_fingsup" body2="index_pf"/>
+        <exclude body1="index_pf" body2="index_mf"/>
+        <exclude body1="index_mf" body2="index_df"/>
+        -->
+    </contact>
+
+    <sensor>
+        <jointpos name="palm2cage" joint="palm2cage"/>
+        <jointpos name="cage2base" joint="cage2base"/>
+        <jointpos name="thumb_base2pf" joint="thumb_basevirt2pf"/>
+        <jointpos name="thumb_pf2mf" joint="thumb_pfvirt2mf"/>
+        <jointpos name="thumb_mf2df" joint="thumb_mf2df"/>
+
+        <jointpos name="index_fingsup2pf" joint="index_basevirt2pf"/>
+        <jointpos name="index_pf2mf" joint="index_pfvirt2mf"/>
+        <jointpos name="index_mf2df" joint="index_mf2df"/>
+
+        <jointpos name="middle_fingsup2pf" joint="middle_basevirt2pf"/>
+        <jointpos name="middle_pf2mf" joint="middle_pfvirt2mf"/>
+        <jointpos name="middle_mf2df" joint="middle_mf2df"/>
+
+        <jointpos name="ring_fingsup2pf" joint="ring_basevirt2pf"/>
+        <jointpos name="ring_pf2mf" joint="ring_pfvirt2mf"/>
+        <jointpos name="ring_mf2df" joint="ring_mf2df"/>
+    </sensor>
+    
+    <actuator>
+        <!-- 
+        For this version of the Faive Hand, the first two joints aren't rolling contact joints.
+        This means those fingers move 0.5x as much as the rolling contact joints with the same joint angle goal.
+        Thus, set kp for these joints to be half the default value of 2, to effectively achieve the same joint stiffness.
+        The actuators for the distal joints are set to have a kp twice the default value, since they must move two joints.
+        
+        The joints with rolling contacts bend twice as much as the commanded joint angle. This is different from the implementation in GripperController, which receive the total joint angle as input.
+        i.e. if 0.1 is sent to a rolling contact joint in mujoco, the joint bends 0.2 in total, achieving the same result as sending 0.2 in GripperController.
+        
+        note: the "gear" attribute allows a scaling to be applied from the actuator dimensions to the joint dimensions, but it seems not to be completely supported in IsaacGym so don't use it.
+        -->
+        <position name="palm2cage" joint="palm2cage" ctrlrange="-1 0"/>
+        <position name="cage2base" joint="cage2base" ctrlrange="-1.74533 0"/>
+
+        <position name="thumb_base2pp" joint="thumb_basevirt2pf" ctrlrange="0 0.78"/>
+        <position name="thumb_pf2mf" joint="thumb_pfvirt2mf" ctrlrange="0 0.698" kp="4"/>
+        
+        <position name="index_base2pp" joint="index_basevirt2pf" ctrlrange="0 0.78"/>
+        <position name="index_pf2mf" joint="index_pfvirt2mf" ctrlrange="0 0.698" kp="4"/>
+
+        <position name="middle_base2pp" joint="middle_basevirt2pf" ctrlrange="0 0.78"/>
+        <position name="middle_pf2mf" joint="middle_pfvirt2mf" ctrlrange="0 0.698" kp="4"/>
+
+        <position name="ring_base2pp" joint="ring_basevirt2pf" ctrlrange="0 0.78"/>
+        <position name="ring_pf2mf" joint="ring_pfvirt2mf" ctrlrange="0 0.698" kp="4"/>
+
+    </actuator>
+
+    <!-- the rolling contact joints are modeled by two virtual joints, which have a constraint set here to constrain them to move together -->
+    <!--The two distal joints are linked together by a tendon, which is done with the "*_jointlink" fixed tendons
+        Some limitations:
+        - mujoco only supports a linear combination of joint angles for fixed tendons, so it is an approximation of the actual linkage.
+          The relation y = 0.7131 x + 0.06959 was derived from get_coupling_eqn() in finger_kinematics.py (modified for a 1st degree polyfit instead of 2nd)
+          where x is PIP angle, y is DIP angle. The y-intercept is ignored.
+        - the two joints are not always coupled in reality- for example, the DIP joint can be moved somewhat freely when the PIP joint is fixed (, at least on the older version of the hand).
+          This model does not capture such relations. It may be possible to replicate it by setting an appropriate tendon range.
+        - in IsaacGym, if there are multiple joints being connected through tendons, they must follow a tree structure and be ordered as such,
+          e.g. tendon 1: [pp2mp_virt ->  pp2mp], tendon 2: [pp2mp -> mp2dp_virt], tendon 3: [mp2dp_virt -> mp2dp]
+    -->
+
+    <tendon>
+        <!-- Thumb -->
+        <fixed name="thumb_base2pf">
+            <joint joint="thumb_base2basevirt" coef="1"/>
+            <joint joint="thumb_basevirt2pf" coef="-1"/>
+        </fixed>
+        <fixed name="thumb_pf2mf">
+            <joint joint="thumb_pf2pfvirt" coef="1"/>
+            <joint joint="thumb_pfvirt2mf" coef="-1"/>
+        </fixed>
+        <fixed name="thumb_mf2df">
+            <joint joint="thumb_pf2pfvirt" coef="1"/>
+            <joint joint="thumb_pfvirt2mf" coef="1"/>
+            <joint joint="thumb_mf2df" coef="-0.895"/>
+        </fixed>
+
+        <!-- Index -->
+        <fixed name="index_base2pf">
+            <joint joint="index_base2basevirt" coef="1"/>
+            <joint joint="index_basevirt2pf" coef="-1"/>
+        </fixed>
+        <fixed name="index_pf2mf">
+            <joint joint="index_pf2pfvirt" coef="1"/>
+            <joint joint="index_pfvirt2mf" coef="-1"/>
+        </fixed>
+        <fixed name="index_mf2df">
+            <joint joint="index_pf2pfvirt" coef="1"/>
+            <joint joint="index_pfvirt2mf" coef="1"/>
+            <joint joint="index_mf2df" coef="-0.895"/>
+        </fixed>
+
+        <!-- Middle -->
+        <fixed name="middle_base2pf">
+            <joint joint="middle_base2basevirt" coef="1"/>
+            <joint joint="middle_basevirt2pf" coef="-1"/>
+        </fixed>
+        <fixed name="middle_pf2mf">
+            <joint joint="middle_pf2pfvirt" coef="1"/>
+            <joint joint="middle_pfvirt2mf" coef="-1"/>
+        </fixed>
+        <fixed name="middle_mf2df">
+            <joint joint="middle_pf2pfvirt" coef="1"/>
+            <joint joint="middle_pfvirt2mf" coef="1"/>
+            <joint joint="middle_mf2df" coef="-0.895"/>
+        </fixed>
+
+        <!-- Ring -->
+        <fixed name="ring_base2pf">
+            <joint joint="ring_base2basevirt" coef="1"/>
+            <joint joint="ring_basevirt2pf" coef="-1"/>
+        </fixed>
+        <fixed name="ring_pf2mf">
+            <joint joint="ring_pf2pfvirt" coef="1"/>
+            <joint joint="ring_pfvirt2mf" coef="-1"/>
+        </fixed>
+        <fixed name="ring_mf2df">
+            <joint joint="ring_pf2pfvirt" coef="1"/>
+            <joint joint="ring_pfvirt2mf" coef="1"/>
+            <joint joint="ring_mf2df" coef="-0.895"/>
+        </fixed>
+    </tendon>
+</mujoco>

@@ -56,7 +56,7 @@ headless: False
 
 # set default task and default training config based on task
 defaults:
-  - task: FaiveHandP0
+  - task: Hand_sphere
   - train: ${task}PPO
   - hydra/job_logging: disabled
 

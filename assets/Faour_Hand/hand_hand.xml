@@ -16,10 +16,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<mujoco model="right_faive_modular">
+<mujoco model="right_hand_modular">
+    <option collision="all"/>
     <compiler angle="radian"/>
-    <include file="faive_metadata.xml"/>
+    <include file="hand_metadata.xml"/>
     <worldbody>
-        <include file="faive_structure.xml"/>
+        <include file="hand_structure.xml"/>
     </worldbody>
 </mujoco>
