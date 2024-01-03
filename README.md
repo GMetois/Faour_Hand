@@ -1,17 +1,17 @@
-# faive_gym
-IsaacGym environments for the Faive Hand (and also somewhat easily extendable to other robotic hands), intended to be used together with [IsaacGymEnvs](https://github.com/NVIDIA-Omniverse/IsaacGymEnvs)
-![](img/isaacgym_preview.gif)
+# Faour Hand
 
-## Resources
-
-* [Original Faive Gym Work from SRL @ ETH Zürich](https://github.com/srl-ethz/faive_gym_oss): The original repo containing the main instruction for the RL part of this project. Provided by the Soft Robotics Lab of ETH Zürich.
-* [faive_gym tutorial video](https://www.youtube.com/watch?v=Nwa7xP3RtO0): A video tutorial on how to get started with the faive_gym library to train a policy with RL, configure the environment, and load your own robot model in the framework.
-* [faive_gym tips document](https://docs.google.com/document/d/1n91q4nECS4vzkC2Jn62DxLiTA15WmdjJsbqNxEuv4tE/edit?usp=sharing): shared Google doc with tips on how to use the library effectively.
-* [RL knowledge dump document](https://docs.google.com/document/d/1mLH4pmkmL0SE-hknsB_qGlR9QBu4GYbEzk0ho16TDC4/edit?usp=sharing): another shared Google doc with general tips about RL for manipulation
+This repository contains the result of our work in the scope of the 151-0615-00L Real-World Robotics - A Hands-On Project Class at ETH Zürich.
+The goal was to imagine, design, build, train, operate, test and challenge a dexterous robotic hand. Here is the content of the resulting work.
 
 ## Content
 
+The content of this repo is composed of 3 parts :
 
+### RL
+
+The content of this part is directly a fork of the ressource provided by the Soft Robotic Lab of ETH Zürich, as this course is a direct extension of their research. They gave a working RL environnement already set up and tested for the IsaacGym framework. For conveinience, we forked the [related repository](https://github.com/srl-ethz/faive_gym_oss) and republished it with our own hand in the files. Please refer to the original repository for the setup and give them all the credit for their amazing work.
+
+The minor improvement are the addition of different tasks and their related PPO, as well as a scheduler do batch launch every combination of parameters in a user defined intervals. We also provide the results of our training in the recording and runs folder.
 
 ## Other comments
 Don't forget to read the paper for the SRL about the main project this work is derived from. This project is for a class backed on their academic work, so all the credit is their, not our.
