@@ -13,6 +13,14 @@ The content of this part is directly a fork of the ressource provided by the Sof
 
 The minor improvement are the addition of different tasks and their related PPO, as well as a scheduler do batch launch every combination of parameters in a user defined intervals. We also provide the results of our training in the recording and runs folder.
 
+### Control
+
+TODO
+
+### CAD
+
+TODO
+
 ## Other comments
 Don't forget to read the paper for the SRL about the main project this work is derived from. This project is for a class backed on their academic work, so all the credit is their, not our.
 ```
