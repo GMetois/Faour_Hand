@@ -15,11 +15,11 @@ The minor improvement are the addition of different tasks and their related PPO,
 
 ### Control
 
-TODO
+The control submodule includes both teleoperation and autonomous modes for full control of the hand. The teleoperation mode uses an Oakd Depth camera for direct hand mimicry. The autonomous mode replays a learned RL policy for the purpose of rolling a ball. All the code is written on a backbone provided by the RWR team.
 
 ### CAD
 
-TODO
+Access https://a360.co/43FZL2z for the final CAD prototype of the hand.
 
 ## Other comments
 Don't forget to read the paper for the SRL about the main project this work is derived from. This project is for a class backed on their academic work, so all the credit is their, not our.
